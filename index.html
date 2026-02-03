@@ -9,91 +9,83 @@
     <style>
         body {
             margin: 0;
-            padding: 0;
+            background: #000; /* Nền tối để bg.png nổi bật */
             font-family: 'Inter', sans-serif;
             -webkit-font-smoothing: antialiased;
-            /* Dùng file bg.png của bro */
-            background: url('bg.png') no-repeat center center fixed;
-            background-size: cover;
+            overflow: hidden;
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
-            color: #ffffff;
         }
 
-        .container {
-            position: relative;
-            z-index: 10;
-            text-align: center;
-            width: 100%;
-            max-width: 900px;
+        /* Ảnh nền chính */
+        .bg-layer {
+            position: fixed;
+            inset: 0;
+            background: url('bg.png') no-repeat center center;
+            background-size: cover;
+            z-index: -1;
         }
+
+        .container { text-align: center; width: 100%; max-width: 1000px; }
 
         h1 {
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: 600;
             letter-spacing: -0.05em;
-            margin-bottom: 5px;
-            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
+            margin-bottom: 40px;
+            color: #fff;
         }
 
-        .tagline {
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.5em;
-            color: rgba(255, 255, 255, 0.5);
-            margin-bottom: 60px;
-            font-weight: 600;
-        }
-
-        /* --- LIQUID GLASS CARD --- */
+        /* --- THE LIQUID GLASS CARD --- */
         .glass-card {
             position: relative;
-            background: rgba(255, 255, 255, 0.02); /* Cực trong để thấy bg.png */
-            backdrop-filter: blur(50px) saturate(180%);
-            -webkit-backdrop-filter: blur(50px) saturate(180%);
-            border-radius: 30px;
-            height: 190px;
+            width: 300px;
+            height: 200px;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: transform 0.6s cubic-bezier(0.2, 1, 0.2, 1);
+            
+            /* Lớp Glass Blur sâu */
+            background: rgba(255, 255, 255, 0.01);
+            backdrop-filter: blur(40px) saturate(150%);
+            -webkit-backdrop-filter: blur(40px) saturate(150%);
+            
+            /* Hiệu ứng khúc xạ viền bằng SVG */
+            filter: url(#liquid-filter);
+            
+            /* Viền kính siêu mảnh */
+            border: 0.5px solid rgba(255, 255, 255, 0.15);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            cursor: pointer;
-            /* Viền khúc xạ tinh tế */
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 
-                inset 0 1px 1px rgba(255, 255, 255, 0.15),
-                0 20px 40px rgba(0, 0, 0, 0.4);
         }
 
         .glass-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            background: rgba(255, 255, 255, 0.08);
+            transform: scale(1.05) translateY(-5px);
+            background: rgba(255, 255, 255, 0.05);
             border-color: rgba(255, 255, 255, 0.3);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
         }
 
-        /* Nội dung bé chuẩn Apple */
-        .icon { font-size: 26px; margin-bottom: 12px; }
-        .label { font-size: 14px; font-weight: 500; letter-spacing: -0.01em; }
+        /* Content tinh tế kiểu Apple */
+        .icon { font-size: 24px; margin-bottom: 10px; }
+        .label { font-size: 13px; font-weight: 500; color: #fff; }
         .desc { 
             font-size: 10px; 
-            color: rgba(255, 255, 255, 0.4); 
-            font-weight: 300; 
-            margin-top: 6px; 
-            padding: 0 25px; 
+            color: rgba(255, 255, 255, 0.5); 
+            margin-top: 4px; 
+            padding: 0 40px; 
             line-height: 1.4; 
+            font-weight: 300;
         }
 
         footer {
             position: fixed;
-            bottom: 40px;
+            bottom: 30px;
             font-size: 9px;
-            font-weight: 700;
-            letter-spacing: 0.4em;
+            letter-spacing: 0.3em;
             color: rgba(255, 255, 255, 0.3);
             text-transform: uppercase;
         }
@@ -101,36 +93,40 @@
 </head>
 <body>
 
-    <div class="container">
-        <header>
-            <h1>Nova AI</h1>
-            <p class="tagline">Intelligence Ecosystem</p>
-        </header>
+    <div class="bg-layer"></div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 px-6">
+    <svg style="position: absolute; width: 0; height: 0;">
+      <filter id="liquid-filter">
+        <feTurbulence type="fractalNoise" baseFrequency="0.01" numOctaves="3" result="noise" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="5" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </svg>
+
+    <div class="container">
+        <h1>Nova AI</h1>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 justify-items-center">
             <div class="glass-card" onclick="location.href='chat.html?mode=coding'">
                 <div class="icon">💻</div>
-                <div class="label">Nova Coding</div>
-                <div class="desc">Engineering logic & system optimization.</div>
+                <div class="label">Coding</div>
+                <div class="desc">Senior engineering logic & optimization.</div>
             </div>
 
             <div class="glass-card" onclick="location.href='chat.html?mode=gaming'">
                 <div class="icon">🎮</div>
-                <div class="label">Nova Gaming</div>
-                <div class="desc">ExtremeOptimizer kernel & FPS tweaks.</div>
+                <div class="label">Gaming</div>
+                <div class="desc">ExtremeOptimizer performance & FPS.</div>
             </div>
 
             <div class="glass-card" onclick="location.href='chat.html?mode=general'">
                 <div class="icon">✨</div>
-                <div class="label">Nova General</div>
-                <div class="desc">Creative brainstorming & smart assistant.</div>
+                <div class="label">General</div>
+                <div class="desc">Versatile daily assistant & brainstorm.</div>
             </div>
         </div>
     </div>
 
-    <footer>
-        &copy; 2026 VRTXQZ • Designed for Performance
-    </footer>
+    <footer>© 2026 VRTXQZ • CORE PLATFORM</footer>
 
 </body>
 </html>

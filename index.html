@@ -8,61 +8,62 @@
     <style>
         @font-face {
             font-family: 'SF-Pro';
-            src: url('./fonts/SF-Pro.ttf');
+            src: url('./fonts/SF-Pro.ttf'); /* Đảm bảo file nằm trong folder fonts */
         }
         body {
             background-color: #000814;
             color: #ffffff;
-            font-family: 'SF-Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'SF-Pro', -apple-system, sans-serif;
             -webkit-font-smoothing: antialiased;
         }
-        .glass {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .glass:hover {
-            background: rgba(0, 116, 217, 0.1);
-            border: 1px solid rgba(0, 212, 255, 0.3);
-            transform: translateY(-8px);
-        }
-        .sapphire-text {
-            background: linear-gradient(180deg, #fff 0%, #0074D9 100%);
+        .sapphire-gradient {
+            background: linear-gradient(180deg, #ffffff 0%, #0074D9 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .glass-card:hover {
+            background: rgba(0, 116, 217, 0.08);
+            border-color: rgba(0, 212, 255, 0.3);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-center p-6">
+<body class="min-h-screen flex flex-col items-center justify-center p-8">
     
-    <header class="text-center mb-16">
-        <h1 class="text-7xl font-bold tracking-tight sapphire-text">NOVA AI</h1>
-        <p class="text-blue-200/40 uppercase tracking-[0.5em] text-[10px] mt-4 font-medium">Intelligence Reimagined</p>
+    <header class="text-center mb-20">
+        <h1 class="text-7xl font-bold tracking-tight sapphire-gradient">NOVA AI</h1>
+        <p class="text-blue-200/30 uppercase tracking-[0.6em] text-[10px] mt-6 font-semibold">Intelligence Reimagined</p>
     </header>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-5xl">
-        <a href="chat.html?mode=coding" class="glass p-10 rounded-[32px] text-center">
-            <div class="text-4xl mb-6">💻</div>
-            <h2 class="text-xl font-semibold mb-2">Coding</h2>
-            <p class="text-gray-500 text-sm leading-relaxed">Advanced algorithm & development support.</p>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl">
+        <a href="chat.html?mode=coding" class="glass-card p-12 rounded-[40px] text-center group">
+            <div class="text-5xl mb-8 group-hover:scale-110 transition-transform">💻</div>
+            <h2 class="text-2xl font-semibold mb-3">Nova Coding</h2>
+            <p class="text-gray-500 text-sm leading-relaxed">Phát triển phần mềm và tối ưu thuật toán chuyên sâu.</p>
         </a>
 
-        <a href="chat.html?mode=gaming" class="glass p-10 rounded-[32px] text-center">
-            <div class="text-4xl mb-6">🎮</div>
-            <h2 class="text-xl font-semibold mb-2">Gaming</h2>
-            <p class="text-gray-400 text-sm leading-relaxed">System optimization & performance tweaks.</p>
+        <a href="chat.html?mode=gaming" class="glass-card p-12 rounded-[40px] text-center group">
+            <div class="text-5xl mb-8 group-hover:scale-110 transition-transform">🎮</div>
+            <h2 class="text-2xl font-semibold mb-3">Nova Gaming</h2>
+            <p class="text-gray-400 text-sm leading-relaxed">Tối ưu hiệu năng Windows và kiến thức Gaming chuyên nghiệp.</p>
         </a>
 
-        <a href="chat.html?mode=general" class="glass p-10 rounded-[32px] text-center">
-            <div class="text-4xl mb-6">✨</div>
-            <h2 class="text-xl font-semibold mb-2">General</h2>
-            <p class="text-gray-400 text-sm leading-relaxed">Daily assistance & creative brainstorming.</p>
+        <a href="chat.html?mode=general" class="glass-card p-12 rounded-[40px] text-center group">
+            <div class="text-5xl mb-8 group-hover:scale-110 transition-transform">✨</div>
+            <h2 class="text-2xl font-semibold mb-3">Nova General</h2>
+            <p class="text-gray-500 text-sm leading-relaxed">Trợ lý đa năng giải quyết mọi tác vụ hàng ngày.</p>
         </a>
     </div>
 
-    <footer class="mt-20 text-gray-600 text-[10px] font-medium tracking-widest">
-        BY VRTXQZ • 2026
+    <footer class="mt-24 text-gray-700 text-[11px] font-medium tracking-[0.2em]">
+        SYSTEM DESIGN BY VRTXQZ • 2026
     </footer>
 
 </body>

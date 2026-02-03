@@ -3,119 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nova Chat</title>
+    <title>Nova AI - Ecosystem</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @font-face { font-family: 'SF-Pro'; src: url('./fonts/SF-Pro-Display-Regular.otf') format('opentype'); font-weight: 400; }
-        @font-face { font-family: 'SF-Pro'; src: url('./fonts/SF-Pro-Display-Medium.otf') format('opentype'); font-weight: 500; }
-        @font-face { font-family: 'SF-Pro'; src: url('./fonts/SF-Pro-Display-Semibold.otf') format('opentype'); font-weight: 600; }
+        @font-face {
+            font-family: 'SF-Pro';
+            src: url('./fonts/SF-Pro-Display-Regular.otf') format('opentype');
+            font-weight: 400;
+        }
+        @font-face {
+            font-family: 'SF-Pro';
+            src: url('./fonts/SF-Pro-Display-Medium.otf') format('opentype');
+            font-weight: 500;
+        }
+        @font-face {
+            font-family: 'SF-Pro';
+            src: url('./fonts/SF-Pro-Display-Semibold.otf') format('opentype');
+            font-weight: 600;
+        }
 
         body {
             background-color: #000814;
             color: #ffffff;
-            font-family: 'SF-Pro', sans-serif;
+            font-family: 'SF-Pro', -apple-system, sans-serif;
             -webkit-font-smoothing: antialiased;
         }
 
-        .chat-area { height: calc(100vh - 200px); scrollbar-width: none; }
-        .chat-area::-webkit-scrollbar { display: none; }
-        
-        .user-bubble { 
-            background: #0074D9; 
-            border-radius: 24px 24px 4px 24px;
+        .sapphire-text {
+            background: linear-gradient(180deg, #ffffff 0%, #0074D9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        .nova-bubble { 
-            background: rgba(255,255,255,0.03); 
-            border: 1px solid rgba(255,255,255,0.08); 
-            border-radius: 24px 24px 24px 4px; 
-        }
-        .input-bar {
+
+        .glass-card {
             background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(30px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .glass-card:hover {
+            background: rgba(0, 116, 217, 0.1);
+            border-color: rgba(0, 212, 255, 0.4);
+            transform: translateY(-12px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
         }
     </style>
 </head>
-<body class="flex flex-col h-screen">
+<body class="min-h-screen flex flex-col items-center justify-center p-8 text-center">
+    
+    <header class="mb-24">
+        <h1 class="text-8xl font-semibold tracking-tighter sapphire-text">NOVA AI</h1>
+        <p class="text-blue-200/30 uppercase tracking-[0.7em] text-[10px] mt-6 font-medium">Intelligence Reimagined</p>
+    </header>
 
-    <nav class="p-6 border-b border-white/5 flex justify-between items-center bg-black/40 backdrop-blur-xl">
-        <div class="flex items-center gap-6">
-            <a href="index.html" class="text-gray-500 hover:text-white transition-all text-[11px] font-bold tracking-widest uppercase">← Back</a>
-            <div class="h-4 w-[1px] bg-white/10"></div>
-            <h2 id="mode-label" class="text-[11px] font-bold tracking-[0.3em] text-blue-400 uppercase">NOVA AI</h2>
-        </div>
-        <input type="password" id="api-key" placeholder="API Key" 
-               class="bg-white/5 border border-white/10 px-6 py-2 rounded-full text-[10px] outline-none focus:border-blue-500 w-64 transition-all">
-    </nav>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl">
+        <a href="chat.html?mode=coding" class="glass-card p-12 rounded-[45px] group">
+            <div class="text-5xl mb-8 group-hover:scale-110 transition-transform">💻</div>
+            <h2 class="text-2xl font-medium mb-3">Nova Coding</h2>
+            <p class="text-gray-500 text-sm leading-relaxed font-light">Advanced software engineering and algorithm optimization.</p>
+        </a>
 
-    <div id="chat-content" class="chat-area overflow-y-auto p-8 space-y-8 flex flex-col">
-        <div class="nova-bubble p-6 max-w-[75%] self-start text-sm leading-relaxed border-l border-blue-500/50">
-            Xin chào **vrtxqz**, tôi là **Nova**. Hệ thống đã sẵn sàng. Hãy nhập API Key và bắt đầu đặt câu hỏi nhé.
-        </div>
+        <a href="chat.html?mode=gaming" class="glass-card p-12 rounded-[45px] group border-blue-500/20">
+            <div class="text-5xl mb-8 group-hover:scale-110 transition-transform">🎮</div>
+            <h2 class="text-2xl font-medium mb-3">Nova Gaming</h2>
+            <p class="text-gray-400 text-sm leading-relaxed font-light">Performance tweaks, FPS boosting, and system optimization.</p>
+        </a>
+
+        <a href="chat.html?mode=general" class="glass-card p-12 rounded-[45px] group">
+            <div class="text-5xl mb-8 group-hover:scale-110 transition-transform">✨</div>
+            <h2 class="text-2xl font-medium mb-3">Nova General</h2>
+            <p class="text-gray-500 text-sm leading-relaxed font-light">Creative brainstorming and versatile daily assistance.</p>
+        </a>
     </div>
 
-    <div class="p-8">
-        <div class="max-w-4xl mx-auto flex gap-4 input-bar p-2 rounded-[30px]">
-            <input type="text" id="user-input" placeholder="Ask Nova anything..." 
-                   class="flex-1 bg-transparent px-6 py-4 outline-none text-sm font-light">
-            <button onclick="sendMessage()" 
-                    class="bg-[#0074D9] px-10 py-4 rounded-[22px] font-bold text-[10px] uppercase tracking-widest hover:bg-blue-600 transition-all active:scale-95">
-                Send
-            </button>
-        </div>
-    </div>
+    <footer class="mt-28 text-gray-700 text-[11px] font-medium tracking-[0.3em] uppercase">
+        Developed by vrtxqz • 2026
+    </footer>
 
-    <script type="module">
-        import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
-
-        const params = new URLSearchParams(window.location.search);
-        const mode = params.get('mode') || 'general';
-        document.getElementById('mode-label').innerText = "NOVA // " + mode.toUpperCase();
-
-        const savedKey = localStorage.getItem('nova_key');
-        if(savedKey) document.getElementById('api-key').value = savedKey;
-
-        const systemInstructions = {
-            coding: "You are Nova Coding. RESPOND IN VIETNAMESE. Chuyên gia lập trình, trả lời ngắn gọn, tối ưu.",
-            gaming: "You are Nova Gaming. RESPOND IN VIETNAMESE. Chuyên gia tối ưu Windows (ExtremeOptimizer style), tăng FPS, giảm lag.",
-            general: "You are Nova General. RESPOND IN VIETNAMESE. Trợ lý đa năng, thân thiện."
-        };
-
-        window.sendMessage = async () => {
-            const keyInput = document.getElementById('api-key');
-            const userInput = document.getElementById('user-input');
-            const chatBox = document.getElementById('chat-content');
-
-            if(!keyInput.value) return alert("API Key is required!");
-            if(!userInput.value) return;
-
-            localStorage.setItem('nova_key', keyInput.value);
-
-            const msg = userInput.value;
-            chatBox.innerHTML += `<div class="user-bubble p-5 max-w-[75%] self-end text-sm leading-relaxed">${msg}</div>`;
-            userInput.value = "";
-            chatBox.scrollTop = chatBox.scrollHeight;
-
-            try {
-                const genAI = new GoogleGenerativeAI(keyInput.value);
-                const model = genAI.getGenerativeModel({ 
-                    model: "gemini-1.5-flash",
-                    systemInstruction: systemInstructions[mode]
-                });
-
-                const result = await model.generateContent(msg);
-                const response = result.response.text();
-
-                chatBox.innerHTML += `<div class="nova-bubble p-6 max-w-[80%] self-start text-sm leading-relaxed">${response}</div>`;
-                chatBox.scrollTop = chatBox.scrollHeight;
-            } catch (err) {
-                chatBox.innerHTML += `<div class="text-red-500 text-[10px] text-center italic">Error: ${err.message}</div>`;
-            }
-        };
-
-        document.getElementById('user-input').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') sendMessage();
-        });
-    </script>
 </body>
 </html>

@@ -1,63 +1,50 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nova Chat</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @font-face { font-family: 'SF-Pro'; src: url('./fonts/SF-Pro.ttf'); }
         body {
             background-color: #000814;
             color: #ffffff;
-            font-family: 'SF-Pro', sans-serif;
+            font-family: 'Inter', sans-serif;
             -webkit-font-smoothing: antialiased;
         }
-        .chat-container { height: calc(100vh - 180px); scrollbar-width: none; }
-        .chat-container::-webkit-scrollbar { display: none; }
+        .chat-area { height: calc(100vh - 180px); scrollbar-width: none; }
+        .chat-area::-webkit-scrollbar { display: none; }
         
-        .user-msg { 
-            background: #0074D9; 
-            border-radius: 24px 24px 4px 24px;
-            box-shadow: 0 4px 15px rgba(0, 116, 217, 0.2);
-        }
-        .nova-msg { 
-            background: rgba(255,255,255,0.04); 
-            border: 1px solid rgba(255,255,255,0.08); 
-            border-radius: 24px 24px 24px 4px; 
-        }
-        .input-blur {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
+        .user-bubble { background: #0074D9; border-radius: 20px 20px 4px 20px; }
+        .nova-bubble { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px 20px 20px 4px; }
+        .input-blur { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(25px); border: 1px solid rgba(255, 255, 255, 0.1); }
     </style>
 </head>
 <body class="flex flex-col h-screen">
 
-    <nav class="p-6 border-b border-white/5 flex justify-between items-center bg-black/20 backdrop-blur-md">
+    <nav class="p-5 border-b border-white/5 flex justify-between items-center bg-black/40 backdrop-blur-md">
         <div class="flex items-center gap-6">
-            <a href="index.html" class="text-gray-500 hover:text-white transition-all text-sm font-medium">← TRỞ VỀ</a>
-            <div class="h-4 w-[1px] bg-white/10"></div>
-            <h2 id="mode-display" class="text-sm font-bold tracking-widest text-blue-400 uppercase">NOVA AI</h2>
+            <a href="index.html" class="text-gray-500 hover:text-white transition-all text-xs font-bold uppercase tracking-widest">← Back</a>
+            <h2 id="mode-label" class="text-xs font-bold tracking-[0.3em] text-blue-400 uppercase">NOVA AI</h2>
         </div>
-        <input type="password" id="api-key" placeholder="Dán Gemini API Key vào đây..." 
-               class="bg-white/5 border border-white/10 px-5 py-2 rounded-full text-[11px] outline-none focus:border-blue-500 w-64 transition-all">
+        <input type="password" id="api-key" placeholder="Gemini API Key" 
+               class="bg-white/5 border border-white/10 px-6 py-2 rounded-full text-[10px] outline-none focus:border-blue-500 w-64">
     </nav>
 
-    <div id="chat-content" class="chat-container overflow-y-auto p-8 space-y-8 flex flex-col">
-        <div class="nova-msg p-5 max-w-[75%] self-start text-sm leading-relaxed">
-            Xin chào **vrtxqz**, tôi là **Nova**. Hệ thống đã sẵn sàng. Hãy nhập API Key (chỉ cần nhập 1 lần) và bắt đầu đặt câu hỏi cho tôi.
+    <div id="chat-content" class="chat-area overflow-y-auto p-8 space-y-6 flex flex-col">
+        <div class="nova-bubble p-5 max-w-[75%] self-start text-sm leading-relaxed border-l-2 border-blue-500">
+            Xin chào **vrtxqz**, tôi là **Nova**. Tôi đã sẵn sàng hỗ trợ bạn bằng tiếng Việt. Hãy nhập API Key để bắt đầu.
         </div>
     </div>
 
-    <div class="p-8">
-        <div class="max-w-4xl mx-auto flex gap-4 input-blur p-2 rounded-[28px]">
-            <input type="text" id="user-input" placeholder="Hỏi Nova điều gì đó..." 
-                   class="flex-1 bg-transparent px-6 py-4 outline-none text-sm">
+    <div class="p-6">
+        <div class="max-w-4xl mx-auto flex gap-4 input-blur p-2 rounded-[24px]">
+            <input type="text" id="user-input" placeholder="Message Nova..." 
+                   class="flex-1 bg-transparent px-6 py-3 outline-none text-sm font-light">
             <button onclick="sendMessage()" 
-                    class="bg-[#0074D9] px-10 py-4 rounded-[22px] font-bold text-xs uppercase tracking-widest hover:bg-blue-600 transition-all active:scale-95">
-                Gửi tin
+                    class="bg-[#0074D9] px-8 py-3 rounded-[18px] font-bold text-[10px] uppercase tracking-widest hover:bg-blue-600 transition-all active:scale-95">
+                Send
             </button>
         </div>
     </div>
@@ -65,36 +52,30 @@
     <script type="module">
         import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
 
-        // 1. Nhận diện Mode từ URL
         const params = new URLSearchParams(window.location.search);
         const mode = params.get('mode') || 'general';
-        document.getElementById('mode-display').innerText = "NOVA // " + mode.toUpperCase();
+        document.getElementById('mode-label').innerText = "NOVA // " + mode.toUpperCase();
 
-        // 2. Tự động lấy Key đã lưu
         const savedKey = localStorage.getItem('nova_key');
         if(savedKey) document.getElementById('api-key').value = savedKey;
 
-        // 3. System Instructions
-        const prompts = {
-            coding: "Bạn là Nova Coding. Trả lời bằng tiếng Việt. Chuyên sâu về lập trình, code sạch, phong cách Apple chuyên nghiệp.",
-            gaming: "Bạn là Nova Gaming. Trả lời bằng tiếng Việt. Chuyên về tối ưu FPS, tinh chỉnh Windows, phong cách ExtremeOptimizer.",
-            general: "Bạn là Nova General. Trả lời bằng tiếng Việt. Thân thiện, đa năng và thông minh."
+        const systemInstructions = {
+            coding: "You are Nova Coding. RESPOND IN VIETNAMESE. Senior software engineer, clean code expert.",
+            gaming: "You are Nova Gaming. RESPOND IN VIETNAMESE. Windows optimization specialist (ExtremeOptimizer style), expert in FPS and latency.",
+            general: "You are Nova General. RESPOND IN VIETNAMESE. Intelligent and friendly assistant."
         };
 
-        // 4. Hàm gửi tin nhắn
         window.sendMessage = async () => {
             const keyInput = document.getElementById('api-key');
             const userInput = document.getElementById('user-input');
             const chatBox = document.getElementById('chat-content');
 
-            if(!keyInput.value) return alert("Vui lòng nhập API Key!");
-            if(!userInput.value) return;
+            if(!keyInput.value || !userInput.value) return;
 
-            // Lưu key để lần sau không phải nhập lại
             localStorage.setItem('nova_key', keyInput.value);
 
             const msg = userInput.value;
-            chatBox.innerHTML += `<div class="user-msg p-5 max-w-[75%] self-end text-sm leading-relaxed">${msg}</div>`;
+            chatBox.innerHTML += `<div class="user-bubble p-4 max-w-[75%] self-end text-sm leading-relaxed">${msg}</div>`;
             userInput.value = "";
             chatBox.scrollTop = chatBox.scrollHeight;
 
@@ -102,20 +83,19 @@
                 const genAI = new GoogleGenerativeAI(keyInput.value);
                 const model = genAI.getGenerativeModel({ 
                     model: "gemini-1.5-flash",
-                    systemInstruction: prompts[mode]
+                    systemInstruction: systemInstructions[mode]
                 });
 
                 const result = await model.generateContent(msg);
                 const response = result.response.text();
 
-                chatBox.innerHTML += `<div class="nova-msg p-5 max-w-[75%] self-start text-sm leading-relaxed">${response}</div>`;
+                chatBox.innerHTML += `<div class="nova-bubble p-5 max-w-[80%] self-start text-sm leading-relaxed shadow-sm">${response}</div>`;
                 chatBox.scrollTop = chatBox.scrollHeight;
             } catch (err) {
-                chatBox.innerHTML += `<div class="text-red-400 text-[10px] text-center italic">Lỗi: ${err.message}</div>`;
+                chatBox.innerHTML += `<div class="text-red-500 text-[10px] text-center italic">Error: ${err.message}</div>`;
             }
         };
 
-        // 5. Bắt sự kiện phím Enter
         document.getElementById('user-input').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') sendMessage();
         });

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova AI - Ecosystem</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background: #000d1a; color: white; }
+        .hero-gradient { background: radial-gradient(circle at center, #0074D9 0%, transparent 70%); opacity: 0.2; }
+        .card-hover:hover { transform: translateY(-10px); border-color: #00d4ff; box-shadow: 0 0 20px rgba(0, 212, 255, 0.2); }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen p-6 overflow-hidden relative">
+    <div class="absolute inset-0 hero-gradient"></div>
+
+    <header class="text-center mb-16 relative z-10">
+        <h1 class="text-6xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600">NOVA AI</h1>
+        <p class="text-blue-300/60 mt-4 tracking-[0.3em] uppercase text-sm">Trí tuệ nhân tạo đa nền tảng</p>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10 max-w-6xl w-full">
+        
+        <div onclick="location.href='chat.html?mode=coding'" class="card-hover cursor-pointer p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md transition-all">
+            <div class="text-4xl mb-4">💻</div>
+            <h2 class="text-2xl font-bold text-blue-400 mb-2">Nova Coding</h2>
+            <p class="text-gray-400 text-sm">Giải quyết thuật toán, debug và tối ưu mã nguồn chuyên sâu.</p>
+        </div>
+
+        <div onclick="location.href='chat.html?mode=gaming'" class="card-hover cursor-pointer p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md transition-all">
+            <div class="text-4xl mb-4">🎮</div>
+            <h2 class="text-2xl font-bold text-blue-400 mb-2">Nova Gaming</h2>
+            <p class="text-gray-400 text-sm">Tối ưu cấu hình, tăng FPS và giải pháp giảm lag tuyệt đối.</p>
+        </div>
+
+        <div onclick="location.href='chat.html?mode=general'" class="card-hover cursor-pointer p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md transition-all">
+            <div class="text-4xl mb-4">✨</div>
+            <h2 class="text-2xl font-bold text-blue-400 mb-2">Nova General</h2>
+            <p class="text-gray-400 text-sm">Trợ lý đa năng hỗ trợ công việc và giải đáp mọi thắc mắc.</p>
+        </div>
+
+    </div>
+
+    <footer class="mt-20 text-gray-600 text-xs tracking-widest relative z-10">
+        POWERED BY VRTXQZ • 2026
+    </footer>
+</body>
+</html>

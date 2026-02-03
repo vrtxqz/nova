@@ -3,64 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nova AI - Ecosystem</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Nova AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        :root {
+            --sapphire-blue: #0071e3;
+            --liquid-bg: #000000;
+        }
+
         body {
-            background-color: #000814;
+            background-color: var(--liquid-bg);
             color: #ffffff;
             font-family: 'Inter', sans-serif;
             -webkit-font-smoothing: antialiased;
+            overflow: hidden;
+            height: 100vh;
         }
-        .sapphire-text {
-            background: linear-gradient(180deg, #ffffff 0%, #0074D9 100%);
+
+        /* Hiệu ứng Liquid Background chuyển động */
+        .liquid-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            filter: blur(80px);
+            opacity: 0.6;
+            animation: flow 15s infinite alternate;
+        }
+
+        .blob {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--sapphire-blue) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        @keyframes flow {
+            0% { transform: translate(-10%, -10%) scale(1); }
+            100% { transform: translate(20%, 20%) scale(1.2); }
+        }
+
+        .apple-title {
+            font-size: 3.5rem;
+            font-weight: 600;
+            letter-spacing: -0.04em;
+            background: linear-gradient(180deg, #FFFFFF 30%, rgba(255,255,255,0.4) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+
+        /* Liquid Glass Card */
         .glass-card {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            border-radius: 32px;
+            transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+            position: relative;
+            overflow: hidden;
         }
+
+        .glass-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
         .glass-card:hover {
-            background: rgba(0, 116, 217, 0.1);
-            border-color: rgba(0, 212, 255, 0.4);
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            transform: scale(1.03) translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .glass-card:hover::before {
+            opacity: 1;
+        }
+
+        .sub-text {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            font-weight: 600;
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-center p-8 text-center">
+<body class="flex flex-col items-center justify-center p-4">
     
-    <header class="mb-20">
-        <h1 class="text-7xl font-bold tracking-tighter sapphire-text">NOVA AI</h1>
-        <p class="text-blue-200/30 uppercase tracking-[0.6em] text-[10px] mt-4 font-semibold">Intelligence Platform</p>
+    <div class="liquid-bg">
+        <div class="blob" style="top: -10%; left: -10%;"></div>
+        <div class="blob" style="bottom: -10%; right: -10%; background: radial-gradient(circle, #003d7a 0%, transparent 70%);"></div>
+    </div>
+
+    <header class="text-center mb-16 relative z-10">
+        <h1 class="apple-title">Nova AI</h1>
+        <p class="sub-text mt-4">Intelligence Platform by vrtxqz</p>
     </header>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl">
-        <a href="chat.html?mode=coding" class="glass-card p-12 rounded-[32px] group">
-            <div class="text-5xl mb-6 group-hover:scale-110 transition-transform">💻</div>
-            <h2 class="text-xl font-semibold mb-3">Nova Coding</h2>
-            <p class="text-gray-500 text-sm font-light">Software engineering and algorithm optimization.</p>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl relative z-10">
+        <a href="chat.html?mode=coding" class="glass-card p-10 group">
+            <div class="text-3xl mb-5 opacity-80 group-hover:opacity-100 transition-opacity">💻</div>
+            <h2 class="text-[14px] font-medium mb-1 tracking-tight">Nova Coding</h2>
+            <p class="text-[11px] text-white/40 font-light leading-relaxed">Software engineering & system logic.</p>
         </a>
 
-        <a href="chat.html?mode=gaming" class="glass-card p-12 rounded-[32px] group border-blue-500/20">
-            <div class="text-5xl mb-6 group-hover:scale-110 transition-transform">🎮</div>
-            <h2 class="text-xl font-semibold mb-3">Nova Gaming</h2>
-            <p class="text-gray-400 text-sm font-light">FPS boosting and system tweaks (ExtremeOptimizer style).</p>
+        <a href="chat.html?mode=gaming" class="glass-card p-10 group">
+            <div class="text-3xl mb-5 opacity-80 group-hover:opacity-100 transition-opacity">🎮</div>
+            <h2 class="text-[14px] font-medium mb-1 tracking-tight">Nova Gaming</h2>
+            <p class="text-[11px] text-white/40 font-light leading-relaxed">ExtremeOptimizer performance tweaks.</p>
         </a>
 
-        <a href="chat.html?mode=general" class="glass-card p-12 rounded-[32px] group">
-            <div class="text-5xl mb-6 group-hover:scale-110 transition-transform">✨</div>
-            <h2 class="text-xl font-semibold mb-3">Nova General</h2>
-            <p class="text-gray-500 text-sm font-light">Versatile assistant for daily logic and creativity.</p>
+        <a href="chat.html?mode=general" class="glass-card p-10 group">
+            <div class="text-3xl mb-5 opacity-80 group-hover:opacity-100 transition-opacity">✨</div>
+            <h2 class="text-[14px] font-medium mb-1 tracking-tight">Nova General</h2>
+            <p class="text-[11px] text-white/40 font-light leading-relaxed">Versatile daily assistant & logic.</p>
         </a>
     </div>
 
-    <footer class="mt-24 text-gray-700 text-[10px] font-bold tracking-[0.4em] uppercase">
-        Developed by vrtxqz • 2026
+    <footer class="fixed bottom-10 sub-text opacity-50 relative z-10">
+        2026 • NOVA ECOSYSTEM
     </footer>
 
 </body>
